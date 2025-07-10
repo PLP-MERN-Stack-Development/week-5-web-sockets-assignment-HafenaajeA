@@ -108,6 +108,11 @@ export const useSocket = () => {
       setTypingUsers(users);
     };
 
+    // Listen for welcome event from server
+    const onWelcome = (msg) => {
+      console.log('Server says:', msg);
+    };
+
     // Register event listeners
     socket.on('connect', onConnect);
     socket.on('disconnect', onDisconnect);
@@ -117,6 +122,7 @@ export const useSocket = () => {
     socket.on('user_joined', onUserJoined);
     socket.on('user_left', onUserLeft);
     socket.on('typing_users', onTypingUsers);
+    socket.on('welcome', onWelcome);
 
     // Clean up event listeners
     return () => {
@@ -128,6 +134,7 @@ export const useSocket = () => {
       socket.off('user_joined', onUserJoined);
       socket.off('user_left', onUserLeft);
       socket.off('typing_users', onTypingUsers);
+      socket.off('welcome', onWelcome);
     };
   }, []);
 
@@ -146,4 +153,4 @@ export const useSocket = () => {
   };
 };
 
-export default socket; 
+export default socket;
